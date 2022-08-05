@@ -1,7 +1,10 @@
 
 package com.appinventario;
 
+import com.funcionalidad.FuncionesInventario;
+import com.funcionalidad.FuncionesSesion;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 
@@ -9,18 +12,52 @@ import javax.swing.table.DefaultTableModel;
  * @author Jenderson
  */
 public class VentanaInventario extends javax.swing.JFrame {
-
-    // Variables para localizar el mouse
-    int xMouse, yMouse;
+    // Variables de control de sesion
+    boolean conectado;
+    String usuario;
+    
+    // Instancia para venta de inicio de sesion
+    VentanaInicioSesion vS;
+    
+    // Instancia para Funciones del inventario y sesión
+    FuncionesInventario fI;
+    FuncionesSesion fS;
     
     // Apartado para tabla de productos
     DefaultTableModel productos;
-    Object [] producto = new Object[3];
+    Object [] productoGuardado = new Object[5];
+    Object [] productoCargado = new Object[6];
+    
+    
+    // Variables para localizar el mouse
+    int xMouse, yMouse;
+    
+    public VentanaInventario(String usuario, boolean estado, FuncionesInventario fInventario, FuncionesSesion fSesion, VentanaInicioSesion vSesion) {
+        initComponents();
+        this.vS = vSesion;
+        this.fS = fSesion;
+        this.usuario = fS.getUsuario();
+        productos = (DefaultTableModel) tablaProductos.getModel();
+        this.fI = fInventario;
+        
+        String[] productosGuardados = this.fI.productosUsuario();
+        
+        if (productosGuardados != null) {
+            for (String p : productosGuardados) {
+                String[] productoCargar = p.split(",");
+                productoGuardado[0] = productoCargar[1];
+                productoGuardado[1] = productoCargar[2];
+                productoGuardado[2] = productoCargar[3];
+                productoGuardado[3] = productoCargar[4];
+                productoGuardado[4] = productoCargar[5];
+                
+                productos.addRow(productoGuardado);
+            }
+        }
+    }
     
     public VentanaInventario() {
         initComponents();
-        
-        productos = (DefaultTableModel) tablaProductos.getModel();
     }
 
 
@@ -29,6 +66,8 @@ public class VentanaInventario extends javax.swing.JFrame {
     private void initComponents() {
 
         background = new javax.swing.JPanel();
+        btnSalir = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         panelOpciones = new javax.swing.JPanel();
         btnMovimiento = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -42,26 +81,60 @@ public class VentanaInventario extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btnConfiguracion = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        labelTitulo = new javax.swing.JLabel();
+        panelDesplazar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         opcionBusqueda = new javax.swing.JComboBox<>();
         inputBuscar = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        panelDesplazar = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        btnSalir = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
         setResizable(false);
 
-        background.setBackground(new java.awt.Color(255, 255, 255));
+        background.setBackground(new java.awt.Color(204, 204, 204));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnSalir.setBackground(new java.awt.Color(255, 51, 51));
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalirMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalirMouseExited(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("X");
+
+        javax.swing.GroupLayout btnSalirLayout = new javax.swing.GroupLayout(btnSalir);
+        btnSalir.setLayout(btnSalirLayout);
+        btnSalirLayout.setHorizontalGroup(
+            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnSalirLayout.createSequentialGroup()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btnSalirLayout.setVerticalGroup(
+            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSalirLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        background.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, -1, -1));
 
         panelOpciones.setBackground(new java.awt.Color(0, 163, 255));
         panelOpciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -185,6 +258,9 @@ public class VentanaInventario extends javax.swing.JFrame {
         btnCerrarSesion.setBackground(new java.awt.Color(0, 163, 255));
         btnCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCerrarSesionMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCerrarSesionMouseEntered(evt);
             }
@@ -242,16 +318,36 @@ public class VentanaInventario extends javax.swing.JFrame {
 
         background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 550));
 
+        labelTitulo.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(0, 0, 0));
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setText("TODOS MIS PRODUCTOS");
+        background.add(labelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 380, 50));
+
+        panelDesplazar.setBackground(new java.awt.Color(204, 204, 204));
+        panelDesplazar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelDesplazarMouseDragged(evt);
+            }
+        });
+        panelDesplazar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelDesplazarMousePressed(evt);
+            }
+        });
+        panelDesplazar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        background.add(panelDesplazar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 30));
+
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Fecha", "Nombre", "Categoría", "Cantidad"
+                "Fecha", "Nombre", "Categoría", "Cantidad Inicial", "Cantidad Actual"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -264,12 +360,6 @@ public class VentanaInventario extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaProductos);
 
         background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 610, 350));
-
-        jLabel1.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TODOS MIS PRODUCTOS");
-        background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 380, 50));
 
         jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -303,20 +393,6 @@ public class VentanaInventario extends javax.swing.JFrame {
         background.add(inputBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 150, 30));
         background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 130, 10));
 
-        panelDesplazar.setBackground(new java.awt.Color(255, 255, 255));
-        panelDesplazar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                panelDesplazarMouseDragged(evt);
-            }
-        });
-        panelDesplazar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                panelDesplazarMousePressed(evt);
-            }
-        });
-        panelDesplazar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        background.add(panelDesplazar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 30));
-
         btnBuscar.setBackground(new java.awt.Color(0, 163, 255));
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -348,42 +424,6 @@ public class VentanaInventario extends javax.swing.JFrame {
         );
 
         background.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 70, 20));
-
-        btnSalir.setBackground(new java.awt.Color(255, 51, 51));
-        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSalirMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnSalirMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnSalirMouseExited(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("X");
-
-        javax.swing.GroupLayout btnSalirLayout = new javax.swing.GroupLayout(btnSalir);
-        btnSalir.setLayout(btnSalirLayout);
-        btnSalirLayout.setHorizontalGroup(
-            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnSalirLayout.createSequentialGroup()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btnSalirLayout.setVerticalGroup(
-            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSalirLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        background.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -498,6 +538,14 @@ public class VentanaInventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarMouseClicked
 
+    private void btnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseClicked
+        fS.setConectado(false);
+        conectado = fS.isConectado();
+        fS.setUsuario("");
+        fS.cambiarVentanas(conectado, vS, this);
+        JOptionPane.showMessageDialog(null, "¡Cierre de sesión exitoso!", "Sesión finalizada", 1);
+    }//GEN-LAST:event_btnCerrarSesionMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -544,7 +592,6 @@ public class VentanaInventario extends javax.swing.JFrame {
     private javax.swing.JPanel btnMovimiento;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JTextField inputBuscar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -556,6 +603,7 @@ public class VentanaInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelTitulo;
     private javax.swing.JComboBox<String> opcionBusqueda;
     private javax.swing.JPanel panelDesplazar;
     private javax.swing.JPanel panelOpciones;
