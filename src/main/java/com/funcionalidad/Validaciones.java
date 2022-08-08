@@ -1,6 +1,8 @@
 package com.funcionalidad;
 
+import java.util.Date;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -33,6 +35,24 @@ public class Validaciones {
             default:
                 return false;
         }
+    }
+    
+    public boolean validarCantidad(String cantidad) {
+        if (!cantidad.equals("")) {
+            try {
+                Integer.parseInt(cantidad);
+                return true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "La cantidad ingresada no es un número", "Error en tipo de dato", 0);
+                return false;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Debe completar todos los campos", "Campos vacíos", 0);
+        return false;
+    }
+    
+    public boolean validarFecha(Date fecha) {
+        return fecha != null;
     }
     
     
