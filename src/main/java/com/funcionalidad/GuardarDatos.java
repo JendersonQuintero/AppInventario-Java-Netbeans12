@@ -16,8 +16,10 @@ public class GuardarDatos {
     // Creación de archivos para almacenar la información
     String dirUsuarios = "Datos\\Usuarios.txt";
     String dirProductos = "Datos\\Productos.txt";
+    String dirConfiguracion = "Datos\\Configuracion.txt";
     File txtUsuarios = new File(dirUsuarios);
     File txtProductos = new File(dirProductos);
+    File txtConfiguracion = new File(dirConfiguracion);
     
     
     /**
@@ -37,6 +39,15 @@ public class GuardarDatos {
             if (txtProductos.exists()) {
             } else {
                 txtProductos.createNewFile();
+            }
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+        
+        try {
+            if (txtConfiguracion.exists()) {
+            } else {
+                txtConfiguracion.createNewFile();
             }
         } catch (IOException e) {
             System.err.println(e);

@@ -47,12 +47,16 @@ public class Validaciones {
                 return false;
             }
         }
-        JOptionPane.showMessageDialog(null, "Debe completar todos los campos", "Campos vacíos", 0);
+        JOptionPane.showMessageDialog(null, "Debe definir una cantidad de productos", "Campo vacío", 0);
         return false;
     }
     
     public boolean validarFecha(Date fecha) {
-        return fecha != null;
+        if (fecha != null) {
+            return true;
+        }
+        JOptionPane.showMessageDialog(null, "Debe colocar una fecha", "Fecha vacía", 0);
+        return false;
     }
     
     
