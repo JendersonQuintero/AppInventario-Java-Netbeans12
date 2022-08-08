@@ -54,6 +54,8 @@ public class VentanaInventario extends javax.swing.JFrame {
                 productos.addRow(productoGuardado);
             }
         }
+        
+        labelUsuario.setText(usuario);
     }
     
     public VentanaInventario() {
@@ -66,23 +68,21 @@ public class VentanaInventario extends javax.swing.JFrame {
     private void initComponents() {
 
         background = new javax.swing.JPanel();
-        btnSalir = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         panelOpciones = new javax.swing.JPanel();
         btnMovimiento = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        btnActualizar = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        btnEliminar = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         btnConfiguracion = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        labelUsuario = new javax.swing.JLabel();
         labelTitulo = new javax.swing.JLabel();
         panelDesplazar = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -91,50 +91,19 @@ public class VentanaInventario extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btnBuscar = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        btnEditar = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1000, 650));
         setResizable(false);
 
-        background.setBackground(new java.awt.Color(204, 204, 204));
+        background.setBackground(new java.awt.Color(255, 255, 255));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnSalir.setBackground(new java.awt.Color(255, 51, 51));
-        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSalirMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnSalirMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnSalirMouseExited(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("X");
-
-        javax.swing.GroupLayout btnSalirLayout = new javax.swing.GroupLayout(btnSalir);
-        btnSalir.setLayout(btnSalirLayout);
-        btnSalirLayout.setHorizontalGroup(
-            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnSalirLayout.createSequentialGroup()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        btnSalirLayout.setVerticalGroup(
-            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSalirLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        background.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, -1, -1));
 
         panelOpciones.setBackground(new java.awt.Color(0, 163, 255));
         panelOpciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -153,7 +122,7 @@ public class VentanaInventario extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Registrar movimiento");
+        jLabel3.setText("Registrar movimientos");
 
         javax.swing.GroupLayout btnMovimientoLayout = new javax.swing.GroupLayout(btnMovimiento);
         btnMovimiento.setLayout(btnMovimientoLayout);
@@ -166,7 +135,7 @@ public class VentanaInventario extends javax.swing.JFrame {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        panelOpciones.add(btnMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 240, 30));
+        panelOpciones.add(btnMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 240, 30));
 
         btnAgregar.setBackground(new java.awt.Color(0, 163, 255));
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -182,7 +151,7 @@ public class VentanaInventario extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Agregar producto");
+        jLabel4.setText("Agregar productos");
 
         javax.swing.GroupLayout btnAgregarLayout = new javax.swing.GroupLayout(btnAgregar);
         btnAgregar.setLayout(btnAgregarLayout);
@@ -195,65 +164,7 @@ public class VentanaInventario extends javax.swing.JFrame {
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        panelOpciones.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 240, 30));
-
-        btnActualizar.setBackground(new java.awt.Color(0, 163, 255));
-        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnActualizarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnActualizarMouseExited(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Actualizar producto");
-
-        javax.swing.GroupLayout btnActualizarLayout = new javax.swing.GroupLayout(btnActualizar);
-        btnActualizar.setLayout(btnActualizarLayout);
-        btnActualizarLayout.setHorizontalGroup(
-            btnActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-        );
-        btnActualizarLayout.setVerticalGroup(
-            btnActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        panelOpciones.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 240, 30));
-
-        btnEliminar.setBackground(new java.awt.Color(0, 163, 255));
-        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseExited(evt);
-            }
-        });
-
-        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Eliminar producto");
-
-        javax.swing.GroupLayout btnEliminarLayout = new javax.swing.GroupLayout(btnEliminar);
-        btnEliminar.setLayout(btnEliminarLayout);
-        btnEliminarLayout.setHorizontalGroup(
-            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-        );
-        btnEliminarLayout.setVerticalGroup(
-            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        panelOpciones.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 240, 30));
+        panelOpciones.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 240, 30));
 
         btnCerrarSesion.setBackground(new java.awt.Color(0, 163, 255));
         btnCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -285,7 +196,7 @@ public class VentanaInventario extends javax.swing.JFrame {
             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        panelOpciones.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 240, 30));
+        panelOpciones.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 240, 30));
 
         btnConfiguracion.setBackground(new java.awt.Color(0, 163, 255));
         btnConfiguracion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -314,17 +225,29 @@ public class VentanaInventario extends javax.swing.JFrame {
             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        panelOpciones.add(btnConfiguracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 240, 30));
+        panelOpciones.add(btnConfiguracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 240, 30));
 
-        background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 550));
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("BIENVENIDO");
+        panelOpciones.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 240, 40));
+
+        labelUsuario.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        labelUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        labelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelUsuario.setText("Usuario");
+        panelOpciones.add(labelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 240, 30));
+
+        background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 650));
 
         labelTitulo.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(0, 0, 0));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("TODOS MIS PRODUCTOS");
-        background.add(labelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 380, 50));
+        background.add(labelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 380, 50));
 
-        panelDesplazar.setBackground(new java.awt.Color(204, 204, 204));
+        panelDesplazar.setBackground(new java.awt.Color(255, 255, 255));
         panelDesplazar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelDesplazarMouseDragged(evt);
@@ -336,7 +259,41 @@ public class VentanaInventario extends javax.swing.JFrame {
             }
         });
         panelDesplazar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        background.add(panelDesplazar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 30));
+
+        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("X");
+        panelDesplazar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 0, 30, 30));
+
+        btnSalir.setBackground(new java.awt.Color(255, 51, 51));
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalirMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalirMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btnSalirLayout = new javax.swing.GroupLayout(btnSalir);
+        btnSalir.setLayout(btnSalirLayout);
+        btnSalirLayout.setHorizontalGroup(
+            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        btnSalirLayout.setVerticalGroup(
+            btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        panelDesplazar.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 0, 30, 30));
+
+        background.add(panelDesplazar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 30));
 
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -359,13 +316,13 @@ public class VentanaInventario extends javax.swing.JFrame {
         tablaProductos.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(tablaProductos);
 
-        background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 610, 350));
+        background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 700, 370));
 
-        jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Filtra productos:");
-        background.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, -1, 30));
+        background.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, -1, 30));
 
         opcionBusqueda.setBackground(new java.awt.Color(255, 255, 255));
         opcionBusqueda.setFont(new java.awt.Font("Roboto Medium", 0, 13)); // NOI18N
@@ -377,7 +334,7 @@ public class VentanaInventario extends javax.swing.JFrame {
                 opcionBusquedaActionPerformed(evt);
             }
         });
-        background.add(opcionBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 110, -1));
+        background.add(opcionBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 140, 30));
 
         inputBuscar.setBackground(new java.awt.Color(255, 255, 255));
         inputBuscar.setFont(new java.awt.Font("Roboto Medium", 0, 13)); // NOI18N
@@ -390,8 +347,8 @@ public class VentanaInventario extends javax.swing.JFrame {
                 inputBuscarMousePressed(evt);
             }
         });
-        background.add(inputBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 150, 30));
-        background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 130, 10));
+        background.add(inputBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 79, 150, 30));
+        background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 108, 140, 10));
 
         btnBuscar.setBackground(new java.awt.Color(0, 163, 255));
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -410,20 +367,60 @@ public class VentanaInventario extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Buscar");
+        jLabel9.setText("Filtrar");
 
         javax.swing.GroupLayout btnBuscarLayout = new javax.swing.GroupLayout(btnBuscar);
         btnBuscar.setLayout(btnBuscarLayout);
         btnBuscarLayout.setHorizontalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
         btnBuscarLayout.setVerticalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        background.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 70, 20));
+        background.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 80, 30));
+
+        btnEditar.setBackground(new java.awt.Color(0, 163, 255));
+
+        jLabel12.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Editar");
+
+        javax.swing.GroupLayout btnEditarLayout = new javax.swing.GroupLayout(btnEditar);
+        btnEditar.setLayout(btnEditarLayout);
+        btnEditarLayout.setHorizontalGroup(
+            btnEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+        );
+        btnEditarLayout.setVerticalGroup(
+            btnEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        background.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 90, 30));
+
+        btnEliminar.setBackground(new java.awt.Color(0, 163, 255));
+
+        jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Eliminar");
+
+        javax.swing.GroupLayout btnEliminarLayout = new javax.swing.GroupLayout(btnEliminar);
+        btnEliminar.setLayout(btnEliminarLayout);
+        btnEliminarLayout.setHorizontalGroup(
+            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+        );
+        btnEliminarLayout.setVerticalGroup(
+            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        background.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 580, 90, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -482,14 +479,6 @@ public class VentanaInventario extends javax.swing.JFrame {
         btnAgregar.setBackground(new Color(0,110,255));
     }//GEN-LAST:event_btnAgregarMouseEntered
 
-    private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
-        btnActualizar.setBackground(new Color(0,110,255));
-    }//GEN-LAST:event_btnActualizarMouseEntered
-
-    private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
-        btnEliminar.setBackground(new Color(0,110,255));
-    }//GEN-LAST:event_btnEliminarMouseEntered
-
     private void btnCerrarSesionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseEntered
         btnCerrarSesion.setBackground(new Color(0,110,255));
     }//GEN-LAST:event_btnCerrarSesionMouseEntered
@@ -501,14 +490,6 @@ public class VentanaInventario extends javax.swing.JFrame {
     private void btnAgregarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseExited
         btnAgregar.setBackground(new Color(0,163,255));
     }//GEN-LAST:event_btnAgregarMouseExited
-
-    private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
-        btnActualizar.setBackground(new Color(0,163,255));
-    }//GEN-LAST:event_btnActualizarMouseExited
-
-    private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
-        btnEliminar.setBackground(new Color(0,163,255));
-    }//GEN-LAST:event_btnEliminarMouseExited
 
     private void btnCerrarSesionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMouseExited
         btnCerrarSesion.setBackground(new Color(0,163,255));
@@ -583,27 +564,29 @@ public class VentanaInventario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
-    private javax.swing.JPanel btnActualizar;
     private javax.swing.JPanel btnAgregar;
     private javax.swing.JPanel btnBuscar;
     private javax.swing.JPanel btnCerrarSesion;
     private javax.swing.JPanel btnConfiguracion;
+    private javax.swing.JPanel btnEditar;
     private javax.swing.JPanel btnEliminar;
     private javax.swing.JPanel btnMovimiento;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JTextField inputBuscar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JLabel labelUsuario;
     private javax.swing.JComboBox<String> opcionBusqueda;
     private javax.swing.JPanel panelDesplazar;
     private javax.swing.JPanel panelOpciones;

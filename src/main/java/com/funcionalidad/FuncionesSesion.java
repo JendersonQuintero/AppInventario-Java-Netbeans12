@@ -47,7 +47,6 @@ public class FuncionesSesion {
         } else {
             // Registro de usuario en la base de datos local
             gDatos.registrarUsuario(new Object[]{usuario,correo,clave});
-            JOptionPane.showMessageDialog(null, "¡Usuario creado exitosamente!", "Registro exitoso", 1);
             setConectado(true);
             setUsuario(usuario);
             return true;

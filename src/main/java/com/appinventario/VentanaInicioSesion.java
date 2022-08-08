@@ -438,6 +438,7 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
                 fI = new FuncionesInventario(this.usuarioConectado, this.gDatos);
                 vI = new VentanaInventario(this.usuarioConectado, this.conectado, this.fI, this.fS, this);
                 fS.cambiarVentanas(conectado, this, vI);
+                JOptionPane.showMessageDialog(null, "¡Usuario creado exitosamente!", "Registro exitoso", 1);
 
                 // Se agrega el usuario a la tabla de usuarios registrados
                 usuarioGuardado[0] = inputUsuario.getText();
