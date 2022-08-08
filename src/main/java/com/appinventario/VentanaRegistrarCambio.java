@@ -1,6 +1,7 @@
 
 package com.appinventario;
 
+import com.funcionalidad.FuncionesInventario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -10,15 +11,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VentanaRegistrarCambio extends javax.swing.JFrame {
     
-    // Variables para localizar el mouse
+    // Variables
     int xMouse, yMouse;
+    int filaSeleccionada;
+    String usuario;
+    FuncionesInventario fI;
+    
     
     // Apartado para crear tabla de cambios de productos
     DefaultTableModel tablaCambios;
     Object [] productoGuardado = new Object[5];
     Object [] productoCargado = new Object[6];
     
-    public VentanaRegistrarCambio() {
+    public VentanaRegistrarCambio(String usuario, FuncionesInventario fI) {
         initComponents();
         tablaCambios = (DefaultTableModel) tablaCambiosProductos.getModel();
     }
@@ -35,7 +40,6 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCambiosProductos = new javax.swing.JTable();
         inputFecha = new com.toedter.calendar.JDateChooser();
-        inputNombre = new javax.swing.JTextField();
         inputCategoria = new javax.swing.JComboBox<>();
         inputMovimiento = new javax.swing.JComboBox<>();
         inputCantidad = new javax.swing.JTextField();
@@ -48,6 +52,9 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JPanel();
+        labelGuardar = new javax.swing.JLabel();
+        inputNombre = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -136,34 +143,28 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
 
         inputFecha.setBackground(new java.awt.Color(255, 255, 255));
         inputFecha.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(inputFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 110, 30));
-
-        inputNombre.setBackground(new java.awt.Color(255, 255, 255));
-        inputNombre.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
-        inputNombre.setForeground(new java.awt.Color(0, 0, 0));
-        inputNombre.setText("Ingrese nombre");
-        inputNombre.setBorder(null);
-        jPanel1.add(inputNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 120, 30));
+        jPanel1.add(inputFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 130, 30));
 
         inputCategoria.setBackground(new java.awt.Color(255, 255, 255));
         inputCategoria.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
         inputCategoria.setForeground(new java.awt.Color(0, 0, 0));
         inputCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(inputCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 110, 30));
+        jPanel1.add(inputCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 160, 30));
 
         inputMovimiento.setBackground(new java.awt.Color(255, 255, 255));
         inputMovimiento.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
         inputMovimiento.setForeground(new java.awt.Color(0, 0, 0));
         inputMovimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Salida" }));
-        jPanel1.add(inputMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 100, 30));
+        jPanel1.add(inputMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 100, 30));
 
         inputCantidad.setBackground(new java.awt.Color(255, 255, 255));
         inputCantidad.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
         inputCantidad.setForeground(new java.awt.Color(0, 0, 0));
         inputCantidad.setText("Cantidad");
-        jPanel1.add(inputCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 70, 30));
+        jPanel1.add(inputCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 70, 30));
 
         btnAgregar.setBackground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setToolTipText("Agrega un elemento a la lista de cambios");
         btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAgregarMouseClicked(evt);
@@ -174,6 +175,7 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
         labelAgregar.setForeground(new java.awt.Color(0, 163, 255));
         labelAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelAgregar.setText("Agregar");
+        labelAgregar.setToolTipText("");
 
         javax.swing.GroupLayout btnAgregarLayout = new javax.swing.GroupLayout(btnAgregar);
         btnAgregar.setLayout(btnAgregarLayout);
@@ -186,9 +188,10 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
             .addComponent(labelAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 90, 30));
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 90, 30));
 
         btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setToolTipText("Elimina el elemento seleccionado de la lista de cambios");
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
@@ -211,37 +214,71 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
             .addComponent(labelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 80, 30));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 150, 80, 30));
 
         jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Cantidad:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 70, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 70, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("Fecha:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 100, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 100, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Nombre:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 100, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 100, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel8.setText("Categoria");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 100, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 100, -1));
 
         jLabel9.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setText("Movimiento:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 100, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 100, -1));
+
+        btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setForeground(new java.awt.Color(0, 163, 255));
+        btnGuardar.setToolTipText("Guarda todos los cambios que están en la lista de cambios");
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
+
+        labelGuardar.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        labelGuardar.setForeground(new java.awt.Color(0, 163, 255));
+        labelGuardar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelGuardar.setText("Guardar");
+
+        javax.swing.GroupLayout btnGuardarLayout = new javax.swing.GroupLayout(btnGuardar);
+        btnGuardar.setLayout(btnGuardarLayout);
+        btnGuardarLayout.setHorizontalGroup(
+            btnGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+        );
+        btnGuardarLayout.setVerticalGroup(
+            btnGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 80, 30));
+
+        inputNombre.setBackground(new java.awt.Color(255, 255, 255));
+        inputNombre.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
+        inputNombre.setForeground(new java.awt.Color(0, 0, 0));
+        inputNombre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(inputNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 180, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -301,6 +338,10 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -340,12 +381,13 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnAgregar;
     private javax.swing.JPanel btnEliminar;
+    private javax.swing.JPanel btnGuardar;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JTextField inputCantidad;
     private javax.swing.JComboBox<String> inputCategoria;
     private com.toedter.calendar.JDateChooser inputFecha;
     private javax.swing.JComboBox<String> inputMovimiento;
-    private javax.swing.JTextField inputNombre;
+    private javax.swing.JComboBox<String> inputNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -357,6 +399,7 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelAgregar;
     private javax.swing.JLabel labelEliminar;
+    private javax.swing.JLabel labelGuardar;
     private javax.swing.JPanel panelDesplazar;
     private javax.swing.JTable tablaCambiosProductos;
     // End of variables declaration//GEN-END:variables
