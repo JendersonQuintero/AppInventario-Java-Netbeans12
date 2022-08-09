@@ -163,6 +163,7 @@ public class FuncionesInventario {
             }
             cambios = datosCambios.split("\n");
             actualizarCantidad(cambios);
+            this.productosUsuario = productosUsuario();
             JOptionPane.showMessageDialog(null, "Inventario actualizado con éxito", "Cambios Registrados", 1);
             return true;
         }

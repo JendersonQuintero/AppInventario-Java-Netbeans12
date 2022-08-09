@@ -357,9 +357,8 @@ public class VentanaMovimiento extends javax.swing.JFrame {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         if (fI.cargarCambios(tablaCambios)) {
             
-            this.setVisible(false);
-            
             vI.Actualizar();
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
 

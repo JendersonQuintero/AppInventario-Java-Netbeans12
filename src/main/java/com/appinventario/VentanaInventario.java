@@ -71,7 +71,10 @@ public class VentanaInventario extends javax.swing.JFrame {
     }
     
     public void Actualizar() {
+        
         String[] productosGuardados = this.fI.getProductosUsuario();
+        productos.getDataVector().removeAllElements();
+        tablaProductos.updateUI();
         
         if (productosGuardados != null) {
             for (String p : productosGuardados) {
@@ -85,7 +88,6 @@ public class VentanaInventario extends javax.swing.JFrame {
                 productos.addRow(productoGuardado);
             }
         }
-        labelUsuario.setText(usuario);
     }
 
 
@@ -414,6 +416,11 @@ public class VentanaInventario extends javax.swing.JFrame {
         background.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 80, 30));
 
         btnEditar.setBackground(new java.awt.Color(0, 163, 255));
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -434,6 +441,11 @@ public class VentanaInventario extends javax.swing.JFrame {
         background.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 90, 30));
 
         btnEliminar.setBackground(new java.awt.Color(0, 163, 255));
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -562,6 +574,19 @@ public class VentanaInventario extends javax.swing.JFrame {
         vM = new VentanaMovimiento(usuario, fI, val, this);
         vM.setVisible(true);
     }//GEN-LAST:event_btnMovimientoMouseClicked
+
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+        
+    }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        if (tablaProductos.getSelectedRow() != -1) {
+            productos.removeRow(tablaProductos.getSelectedRow());
+//            boolean = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eleminar este producto?", "Eliminar producto", "OK_CANCEL_OPTION", 1);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto antes de eliminar", "No ha seleccionado un producto", 1);
+        }
+    }//GEN-LAST:event_btnEliminarMouseClicked
 
     /**
      * @param args the command line arguments
