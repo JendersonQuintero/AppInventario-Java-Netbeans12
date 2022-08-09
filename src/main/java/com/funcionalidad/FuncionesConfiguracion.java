@@ -11,4 +11,11 @@ package com.funcionalidad;
  */
 public class FuncionesConfiguracion {
     
+    GuardarDatos gD;
+    String usuario;
+    
+    public FuncionesConfiguracion(String usuario, GuardarDatos gDatos) {
+        this.gD = gDatos;
+        this.usuario = usuario;
+    }
 }

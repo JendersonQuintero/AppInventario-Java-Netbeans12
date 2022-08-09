@@ -2,6 +2,7 @@
 package com.appinventario;
 
 import com.funcionalidad.FuncionesInventario;
+import com.funcionalidad.Validaciones;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -9,24 +10,42 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author Jenderson
  */
-public class VentanaRegistrarCambio extends javax.swing.JFrame {
+public class VentanaMovimiento extends javax.swing.JFrame {
     
     // Variables
     int xMouse, yMouse;
     int filaSeleccionada;
     String usuario;
     FuncionesInventario fI;
+    VentanaInventario vI;
+    Validaciones val;
+    String textTemp = "";
+    String conteoTemp = "";
     
     
     // Apartado para crear tabla de cambios de productos
     DefaultTableModel tablaCambios;
-    Object [] productoGuardado = new Object[5];
+    Object [] productoGuardado = new Object[4];
     Object [] productoCargado = new Object[6];
     
-    public VentanaRegistrarCambio(String usuario, FuncionesInventario fI) {
+    public VentanaMovimiento(String usuario, FuncionesInventario fInventario, Validaciones v, VentanaInventario vI) {
         initComponents();
+        
+        this.usuario = usuario;
+        this.fI = fInventario;
+        this.vI = vI;
+        this.val = v;
         tablaCambios = (DefaultTableModel) tablaCambiosProductos.getModel();
+        
+        fI.cargarProductos(inputNombre);
+        
+        
     }
+    
+    public VentanaMovimiento() {
+        initComponents();
+    }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -40,21 +59,19 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCambiosProductos = new javax.swing.JTable();
         inputFecha = new com.toedter.calendar.JDateChooser();
-        inputCategoria = new javax.swing.JComboBox<>();
         inputMovimiento = new javax.swing.JComboBox<>();
         inputCantidad = new javax.swing.JTextField();
-        btnAgregar = new javax.swing.JPanel();
-        labelAgregar = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JPanel();
         labelEliminar = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JPanel();
         labelGuardar = new javax.swing.JLabel();
         inputNombre = new javax.swing.JComboBox<>();
+        btnAgregar = new javax.swing.JPanel();
+        labelAgregar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -134,7 +151,7 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Fecha", "Nombre", "Categoria", "Movimiento", "Cantidad"
+                "Fecha", "Nombre", "Movimiento", "Cantidad"
             }
         ));
         jScrollPane1.setViewportView(tablaCambiosProductos);
@@ -143,58 +160,37 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
 
         inputFecha.setBackground(new java.awt.Color(255, 255, 255));
         inputFecha.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(inputFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 130, 30));
-
-        inputCategoria.setBackground(new java.awt.Color(255, 255, 255));
-        inputCategoria.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
-        inputCategoria.setForeground(new java.awt.Color(0, 0, 0));
-        inputCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(inputCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 160, 30));
+        jPanel1.add(inputFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 130, 30));
 
         inputMovimiento.setBackground(new java.awt.Color(255, 255, 255));
         inputMovimiento.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
         inputMovimiento.setForeground(new java.awt.Color(0, 0, 0));
         inputMovimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Salida" }));
-        jPanel1.add(inputMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 100, 30));
+        jPanel1.add(inputMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 100, 30));
 
         inputCantidad.setBackground(new java.awt.Color(255, 255, 255));
         inputCantidad.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
         inputCantidad.setForeground(new java.awt.Color(0, 0, 0));
         inputCantidad.setText("Cantidad");
-        jPanel1.add(inputCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 70, 30));
-
-        btnAgregar.setBackground(new java.awt.Color(255, 255, 255));
-        btnAgregar.setToolTipText("Agrega un elemento a la lista de cambios");
-        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseClicked(evt);
+        inputCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                inputCantidadMousePressed(evt);
             }
         });
-
-        labelAgregar.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelAgregar.setForeground(new java.awt.Color(0, 163, 255));
-        labelAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelAgregar.setText("Agregar");
-        labelAgregar.setToolTipText("");
-
-        javax.swing.GroupLayout btnAgregarLayout = new javax.swing.GroupLayout(btnAgregar);
-        btnAgregar.setLayout(btnAgregarLayout);
-        btnAgregarLayout.setHorizontalGroup(
-            btnAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-        );
-        btnAgregarLayout.setVerticalGroup(
-            btnAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 90, 30));
+        jPanel1.add(inputCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 70, 30));
 
         btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setToolTipText("Elimina el elemento seleccionado de la lista de cambios");
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseExited(evt);
             }
         });
 
@@ -214,37 +210,31 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
             .addComponent(labelEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 150, 80, 30));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, 80, 30));
 
         jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Cantidad:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 70, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 70, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("Fecha:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 100, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 100, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Nombre:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 100, -1));
-
-        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel8.setText("Categoria");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 100, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 100, -1));
 
         jLabel9.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setText("Movimiento:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 100, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 100, -1));
 
         btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         btnGuardar.setForeground(new java.awt.Color(0, 163, 255));
@@ -253,6 +243,12 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnGuardarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseExited(evt);
             }
         });
 
@@ -272,13 +268,45 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
             .addComponent(labelGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 80, 30));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 80, 30));
 
         inputNombre.setBackground(new java.awt.Color(255, 255, 255));
         inputNombre.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
         inputNombre.setForeground(new java.awt.Color(0, 0, 0));
-        inputNombre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(inputNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 180, 30));
+        jPanel1.add(inputNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 160, 30));
+
+        btnAgregar.setBackground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setToolTipText("Agregue un elmento a la tabla de cambios");
+        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseExited(evt);
+            }
+        });
+
+        labelAgregar.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        labelAgregar.setForeground(new java.awt.Color(0, 163, 255));
+        labelAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAgregar.setText("Agregar");
+
+        javax.swing.GroupLayout btnAgregarLayout = new javax.swing.GroupLayout(btnAgregar);
+        btnAgregar.setLayout(btnAgregarLayout);
+        btnAgregarLayout.setHorizontalGroup(
+            btnAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+        );
+        btnAgregarLayout.setVerticalGroup(
+            btnAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 80, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -293,9 +321,9 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        System.exit(0);
+        this.setVisible(false);
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void panelDesplazarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelDesplazarMousePressed
@@ -317,18 +345,6 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
         btnSalir.setBackground(new Color(255, 51, 51));
     }//GEN-LAST:event_btnSalirMouseExited
 
-    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        java.sql.Date fecha = new java.sql.Date(inputFecha.getDate().getTime());
-
-        productoGuardado[0] = fecha;
-        productoGuardado[1] = inputNombre.getText();
-        productoGuardado[2] = inputCategoria.getSelectedItem();
-        productoGuardado[3] = inputMovimiento.getSelectedItem();
-        productoGuardado[4] = inputCantidad.getText();
-        
-        tablaCambios.addRow(productoGuardado);
-    }//GEN-LAST:event_btnAgregarMouseClicked
-
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         if (tablaCambiosProductos.getSelectedRow() != -1) {
             tablaCambios.removeRow(tablaCambiosProductos.getSelectedRow());
@@ -339,8 +355,62 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
+        if (fI.cargarCambios(tablaCambios)) {
+            
+            this.setVisible(false);
+            
+            vI.Actualizar();
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
+        btnEliminar.setBackground(new Color(153,153,153));
+        labelEliminar.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_btnEliminarMouseEntered
+
+    private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
+        btnEliminar.setBackground(new Color(255,255,255));
+        labelEliminar.setForeground(new Color(0,163,255));
+    }//GEN-LAST:event_btnEliminarMouseExited
+
+    private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
+        btnGuardar.setBackground(new Color(153,153,153));
+        labelGuardar.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_btnGuardarMouseEntered
+
+    private void btnGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseExited
+        btnGuardar.setBackground(new Color(255,255,255));
+        labelGuardar.setForeground(new Color(0,163,255));
+    }//GEN-LAST:event_btnGuardarMouseExited
+
+    private void btnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseEntered
+        btnAgregar.setBackground(new Color(153,153,153));
+        labelAgregar.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_btnAgregarMouseEntered
+
+    private void btnAgregarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseExited
+        btnAgregar.setBackground(new Color(255,255,255));
+        labelAgregar.setForeground(new Color(0,163,255));
+    }//GEN-LAST:event_btnAgregarMouseExited
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+
+        if (val.validarFecha(inputFecha.getDate())) {
+            if (val.validarCantidad(inputCantidad.getText())) {
+                java.sql.Date fecha = new java.sql.Date(inputFecha.getDate().getTime());
+                productoGuardado[0] = fecha;
+                productoGuardado[1] = inputNombre.getSelectedItem();
+                productoGuardado[2] = inputMovimiento.getSelectedItem();
+                productoGuardado[3] = inputCantidad.getText();
+
+                fI.revisarRepetidos(tablaCambios, productoGuardado);
+            }
+        }
+    }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void inputCantidadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputCantidadMousePressed
+        inputCantidad.setText("");
+    }//GEN-LAST:event_inputCantidadMousePressed
 
     /**
      * @param args the command line arguments
@@ -359,21 +429,23 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarCambio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaMovimiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarCambio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaMovimiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarCambio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaMovimiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarCambio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaMovimiento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarCambio().setVisible(true);
+                new VentanaMovimiento().setVisible(true);
             }
         });
     }
@@ -384,7 +456,6 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
     private javax.swing.JPanel btnGuardar;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JTextField inputCantidad;
-    private javax.swing.JComboBox<String> inputCategoria;
     private com.toedter.calendar.JDateChooser inputFecha;
     private javax.swing.JComboBox<String> inputMovimiento;
     private javax.swing.JComboBox<String> inputNombre;
@@ -393,7 +464,6 @@ public class VentanaRegistrarCambio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

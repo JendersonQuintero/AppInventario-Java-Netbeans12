@@ -1,8 +1,9 @@
-
 package com.appinventario;
 
+import com.funcionalidad.FuncionesConfiguracion;
 import com.funcionalidad.FuncionesInventario;
 import com.funcionalidad.FuncionesSesion;
+import com.funcionalidad.Validaciones;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -16,12 +17,17 @@ public class VentanaInventario extends javax.swing.JFrame {
     boolean conectado;
     String usuario;
     
-    // Instancia para venta de inicio de sesion
+    // Instancia para ventanas
     VentanaInicioSesion vS;
+    VentanaMovimiento vM;
+    VentanaAgregarProducto vA;
+    VentanaConfiguracion vC;
     
-    // Instancia para Funciones del inventario y sesión
+    // Instancia para Funciones y validaciones
     FuncionesInventario fI;
     FuncionesSesion fS;
+    FuncionesConfiguracion fC;
+    Validaciones val;
     
     // Apartado para tabla de productos
     DefaultTableModel productos;
@@ -32,15 +38,17 @@ public class VentanaInventario extends javax.swing.JFrame {
     // Variables para localizar el mouse
     int xMouse, yMouse;
     
-    public VentanaInventario(String usuario, boolean estado, FuncionesInventario fInventario, FuncionesSesion fSesion, VentanaInicioSesion vSesion) {
+    public VentanaInventario(String usuario, boolean estado, FuncionesInventario fInventario, FuncionesSesion fSesion, VentanaInicioSesion vSesion, FuncionesConfiguracion fConfig) {
         initComponents();
+        this.val = new Validaciones();
         this.vS = vSesion;
         this.fS = fSesion;
+        this.fC = fConfig;
         this.usuario = fS.getUsuario();
         productos = (DefaultTableModel) tablaProductos.getModel();
         this.fI = fInventario;
         
-        String[] productosGuardados = this.fI.productosUsuario();
+        String[] productosGuardados = this.fI.getProductosUsuario();
         
         if (productosGuardados != null) {
             for (String p : productosGuardados) {
@@ -60,6 +68,24 @@ public class VentanaInventario extends javax.swing.JFrame {
     
     public VentanaInventario() {
         initComponents();
+    }
+    
+    public void Actualizar() {
+        String[] productosGuardados = this.fI.getProductosUsuario();
+        
+        if (productosGuardados != null) {
+            for (String p : productosGuardados) {
+                String[] productoCargar = p.split(",");
+                productoGuardado[0] = productoCargar[1];
+                productoGuardado[1] = productoCargar[2];
+                productoGuardado[2] = productoCargar[3];
+                productoGuardado[3] = productoCargar[4];
+                productoGuardado[4] = productoCargar[5];
+                
+                productos.addRow(productoGuardado);
+            }
+        }
+        labelUsuario.setText(usuario);
     }
 
 
@@ -81,8 +107,8 @@ public class VentanaInventario extends javax.swing.JFrame {
         labelUsuario = new javax.swing.JLabel();
         labelTitulo = new javax.swing.JLabel();
         panelDesplazar = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -99,7 +125,6 @@ public class VentanaInventario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1000, 650));
         setResizable(false);
 
         background.setBackground(new java.awt.Color(255, 255, 255));
@@ -111,6 +136,9 @@ public class VentanaInventario extends javax.swing.JFrame {
         btnMovimiento.setBackground(new java.awt.Color(0, 163, 255));
         btnMovimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMovimiento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMovimientoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnMovimientoMouseEntered(evt);
             }
@@ -260,12 +288,6 @@ public class VentanaInventario extends javax.swing.JFrame {
         });
         panelDesplazar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("X");
-        panelDesplazar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 0, 30, 30));
-
         btnSalir.setBackground(new java.awt.Color(255, 51, 51));
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -280,15 +302,24 @@ public class VentanaInventario extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("X");
+
         javax.swing.GroupLayout btnSalirLayout = new javax.swing.GroupLayout(btnSalir);
         btnSalir.setLayout(btnSalirLayout);
         btnSalirLayout.setHorizontalGroup(
             btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSalirLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         btnSalirLayout.setVerticalGroup(
             btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSalirLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         panelDesplazar.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 0, 30, 30));
@@ -526,6 +557,11 @@ public class VentanaInventario extends javax.swing.JFrame {
         fS.cambiarVentanas(conectado, vS, this);
         JOptionPane.showMessageDialog(null, "¡Cierre de sesión exitoso!", "Sesión finalizada", 1);
     }//GEN-LAST:event_btnCerrarSesionMouseClicked
+
+    private void btnMovimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMovimientoMouseClicked
+        vM = new VentanaMovimiento(usuario, fI, val, this);
+        vM.setVisible(true);
+    }//GEN-LAST:event_btnMovimientoMouseClicked
 
     /**
      * @param args the command line arguments

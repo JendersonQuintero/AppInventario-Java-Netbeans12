@@ -1,6 +1,7 @@
 package com.appinventario;
 
 
+import com.funcionalidad.FuncionesConfiguracion;
 import com.funcionalidad.FuncionesInventario;
 import com.funcionalidad.FuncionesSesion;
 import com.funcionalidad.GuardarDatos;
@@ -21,6 +22,7 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
     VentanaInventario vI;
     FuncionesSesion fS;
     FuncionesInventario fI;
+    FuncionesConfiguracion fC;
     
     // Variable de Inicio de Sesión y de usuario conectado
     public boolean conectado = false;
@@ -48,7 +50,7 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
         // Tabla de usuarios
         usuarios = (DefaultTableModel) tablaUsuarios.getModel();
         
-        // Asociar instancia de GuardarDatos con constante gDatos y FuncionesSesion
+        // Asociar instancias
         this.gDatos = gD;
         this.fS = funSe;
         
@@ -436,7 +438,8 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
                 this.conectado = fS.isConectado();
                 this.usuarioConectado = fS.getUsuario();
                 fI = new FuncionesInventario(this.usuarioConectado, this.gDatos);
-                vI = new VentanaInventario(this.usuarioConectado, this.conectado, this.fI, this.fS, this);
+                fC = new FuncionesConfiguracion(this.usuarioConectado, this.gDatos);
+                vI = new VentanaInventario(this.usuarioConectado, this.conectado, this.fI, this.fS, this, this.fC);
                 fS.cambiarVentanas(conectado, this, vI);
                 JOptionPane.showMessageDialog(null, "¡Usuario creado exitosamente!", "Registro exitoso", 1);
 
@@ -463,7 +466,8 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
                 if (this.fS.iniciarSesion(usuarioConectado, clave)) {
                     this.conectado = fS.isConectado();
                     fI = new FuncionesInventario(this.usuarioConectado, this.gDatos);
-                    vI = new VentanaInventario(this.usuarioConectado, this.conectado, this.fI, this.fS, this);
+                    fC = new FuncionesConfiguracion(this.usuarioConectado, this.gDatos);
+                    vI = new VentanaInventario(this.usuarioConectado, this.conectado, this.fI, this.fS, this, this.fC);
                     fS.cambiarVentanas(conectado, this, vI);
                 }
             }

@@ -41,11 +41,16 @@ public class Validaciones {
         if (!cantidad.equals("")) {
             try {
                 Integer.parseInt(cantidad);
-                return true;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "La cantidad ingresada no es un número", "Error en tipo de dato", 0);
                 return false;
             }
+            if (Integer.parseInt(cantidad) <= 0) {
+                JOptionPane.showMessageDialog(null, "La cantidad ingresada no es válida", "Error en cantidad", 0);
+                return false;
+            } else {
+                return true;
+            } 
         }
         JOptionPane.showMessageDialog(null, "Debe definir una cantidad de productos", "Campo vacío", 0);
         return false;
@@ -58,6 +63,8 @@ public class Validaciones {
         JOptionPane.showMessageDialog(null, "Debe colocar una fecha", "Fecha vacía", 0);
         return false;
     }
+    
+    
     
     
     

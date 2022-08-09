@@ -1,7 +1,9 @@
 package com.appinventario;
 
+
 import com.funcionalidad.FuncionesSesion;
 import com.funcionalidad.GuardarDatos;
+
 
 
 /**
@@ -23,13 +25,7 @@ public class Run {
         // Se inicia y activa la ventana de Login
         VentanaInicioSesion vInit = new VentanaInicioSesion(gD, fS);
         vInit.setVisible(true);
-
-//        FuncionesInventario fI = new FuncionesInventario("Norangel", gD);
-//        
-//        String[] prod = gD.cargarProductos();
-//        String[] prodUser = fI.productosUsuario();
-//        
-//        System.out.println(prodUser[0]);
+        
     }
     
 }

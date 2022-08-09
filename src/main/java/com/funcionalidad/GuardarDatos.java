@@ -1,10 +1,16 @@
 package com.funcionalidad;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -138,6 +144,54 @@ public class GuardarDatos {
             return null;
         }
         return productos;
+    }
+    
+    public void limpiarTxt(String eleccion) {
+        File elegido;
+        switch (eleccion) {
+            case "Productos":
+                elegido = txtProductos;
+                break;
+            case "Usuarios":
+                elegido = txtUsuarios;
+                break;
+            case "Configuracion":
+                elegido = txtConfiguracion;
+                break;
+            default:
+                elegido = txtProductos;
+        }
+        try{
+            PrintWriter p = new PrintWriter(elegido);
+            p.print("");
+        } catch(FileNotFoundException e){  
+            System.err.println(e);
+        }
+    }
+    
+    public void reescribirTxt(String nuevaData, String eleccion) {
+        File elegido;
+        switch (eleccion) {
+            case "Productos":
+                elegido = txtProductos;
+                break;
+            case "Usuarios":
+                elegido = txtUsuarios;
+                break;
+            case "Configuracion":
+                elegido = txtConfiguracion;
+                break;
+            default:
+                elegido = txtProductos;
+        }
+        limpiarTxt(eleccion);
+        try (BufferedWriter escribe = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(elegido, true)))) {
+            escribe.write(nuevaData);
+            escribe.close();
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+        
     }
     
     public boolean existeUsuario(String usuario) {
