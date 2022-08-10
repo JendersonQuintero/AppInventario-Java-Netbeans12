@@ -19,8 +19,6 @@ public class VentanaMovimiento extends javax.swing.JFrame {
     FuncionesInventario fI;
     VentanaInventario vI;
     Validaciones val;
-    String textTemp = "";
-    String conteoTemp = "";
     
     
     // Apartado para crear tabla de cambios de productos
@@ -84,8 +82,9 @@ public class VentanaMovimiento extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("REGISTRA EL CAMBIO EN TUS PRODUCTOS");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 490, 66));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 60));
 
         panelDesplazar.setBackground(new java.awt.Color(0, 163, 255));
         panelDesplazar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -170,8 +169,9 @@ public class VentanaMovimiento extends javax.swing.JFrame {
 
         inputCantidad.setBackground(new java.awt.Color(255, 255, 255));
         inputCantidad.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
-        inputCantidad.setForeground(new java.awt.Color(0, 0, 0));
-        inputCantidad.setText("Cantidad");
+        inputCantidad.setForeground(new java.awt.Color(122, 122, 122));
+        inputCantidad.setText("  Cantidad");
+        inputCantidad.setBorder(null);
         inputCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 inputCantidadMousePressed(evt);
@@ -409,6 +409,7 @@ public class VentanaMovimiento extends javax.swing.JFrame {
 
     private void inputCantidadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputCantidadMousePressed
         inputCantidad.setText("");
+        inputCantidad.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_inputCantidadMousePressed
 
     /**
