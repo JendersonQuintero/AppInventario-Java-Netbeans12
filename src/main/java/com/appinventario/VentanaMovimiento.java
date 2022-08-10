@@ -324,6 +324,11 @@ public class VentanaMovimiento extends javax.swing.JFrame {
     
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         this.setVisible(false);
+        inputCantidad.setText(" Cantidad");
+        inputCantidad.setForeground(new Color(122,122,122));
+        inputFecha.setDate(null);
+        tablaCambios.getDataVector().removeAllElements();
+        tablaCambiosProductos.updateUI();
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void panelDesplazarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelDesplazarMousePressed
