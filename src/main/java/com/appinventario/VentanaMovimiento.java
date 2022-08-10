@@ -37,7 +37,7 @@ public class VentanaMovimiento extends javax.swing.JFrame {
         this.val = v;
         tablaCambios = (DefaultTableModel) tablaCambiosProductos.getModel();
         
-        fI.cargarProductos(inputNombre);
+        fI.cargarOpcionesProductos(inputNombre);
         
         
     }

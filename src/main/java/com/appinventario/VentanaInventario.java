@@ -581,8 +581,14 @@ public class VentanaInventario extends javax.swing.JFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         if (tablaProductos.getSelectedRow() != -1) {
-            productos.removeRow(tablaProductos.getSelectedRow());
-//            boolean = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eleminar este producto?", "Eliminar producto", "OK_CANCEL_OPTION", 1);
+            int eleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eleminar este producto?", "Eliminar producto", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            if (eleccion == 0) {
+                productos.removeRow(tablaProductos.getSelectedRow());
+                fI.eliminarProducto(String.valueOf(productos.getValueAt(tablaProductos.getSelectedRow(), 1)));
+                Actualizar();
+                JOptionPane.showMessageDialog(null, "Producto eliminado con éxito", "Eliminación completada", 1);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto antes de eliminar", "No ha seleccionado un producto", 1);
         }

@@ -32,17 +32,13 @@ public class FuncionesInventario {
         this.productosUsuario = productosUsuario();
     }
     
-    public void reescribirProductos(String dataNueva) {
-        gDatos.reescribirTxt(dataNueva, "Productos");
-    }
-    
-    public String extraerProductos() {
+    private String extraerProductos() {
         String[] datosViejos = gDatos.cargarProductos();
         String datosLimpios = "";
         for (String datos : datosViejos) {
             String[] datosProducto = datos.split(",");
             
-            if (!datosProducto[0].equals(usuario)) {
+            if (!datosProducto[0].equals(this.usuario)) {
                 datosLimpios += datos + "\n";
             }
         }
@@ -72,13 +68,14 @@ public class FuncionesInventario {
         return null;
     }
     
-    public void actualizarCantidad(String[] cambiosProductos) {
+    private void actualizarCantidad(String[] cambiosProductos) {
         String[] productosUser = productosUsuario();
+        String[] datosCambio;
         String productosCambiados = "";
         String productoTemp;
-        String[] datosCambio;
         String datosFinales = "";
         boolean completado = true;
+        boolean encontrado = false;
         int cantidadActual;
         int cantidadInicial;
         int nuevaCantidad;
@@ -117,12 +114,11 @@ public class FuncionesInventario {
                 break;
             }
         }
-        String[] lineaCambiada = productosCambiados.split("\n");
-        boolean encontrado = false;
+        String[] productoCambiado = productosCambiados.split("\n");
         for (String dato : productosUser) {
             String[] datosProducto = dato.split(",");
             
-            for (String linea : lineaCambiada) {
+            for (String linea : productoCambiado) {
                 String[] datosLinea = linea.split(",");
                 
                 if (datosProducto[2].equals(datosLinea[2])) {
@@ -141,6 +137,10 @@ public class FuncionesInventario {
             datosFinales += extraerProductos();
             reescribirProductos(datosFinales);
         }
+    }
+    
+    public void reescribirProductos(String dataNueva) {
+        gDatos.reescribirTxt(dataNueva, "Productos");
     }
     
     public boolean cargarCambios(DefaultTableModel tD) {
@@ -171,7 +171,7 @@ public class FuncionesInventario {
         return false;
     }
     
-    public void cargarProductos(JComboBox listaNombre) {
+    public void cargarOpcionesProductos(JComboBox listaNombre) {
         String[] productos = productosUsuario();
         
         for (String producto : productos) {
@@ -202,6 +202,25 @@ public class FuncionesInventario {
         }
     }
 
+    public void agregarProducto(Object[] producto) {
+        gDatos.registrarProducto(producto);
+    }
+    
+    public void eliminarProducto(String producto) {
+        String[] datosViejos = gDatos.cargarProductos();
+        String datosNuevos = "";
+        for (String datos : datosViejos) {
+            String[] datosProducto = datos.split(",");
+            
+            if (!datosProducto[0].equals(this.usuario) && !datosProducto[2].equals(producto)) { // Se agregan todos excepto el producto eliminado
+                datosNuevos += datos + "\n";
+            }
+        }
+        reescribirProductos(datosNuevos);
+        this.productosUsuario = productosUsuario();
+    }
+    
+    
     public String[] getProductosUsuario() {
         return productosUsuario;
     }
