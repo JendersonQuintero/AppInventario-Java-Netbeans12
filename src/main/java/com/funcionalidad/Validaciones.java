@@ -23,8 +23,39 @@ public class Validaciones {
     String regxClave = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$";
     Pattern patternClave = Pattern.compile(regxClave);
     
+    // Patrón para validar campos de texto
+    String regxTexto = "([a-z,A-Z,á-ú,0-9\\s]){3,25}[^\\s]";
+    Pattern patternTexto = Pattern.compile(regxTexto);
     
-    public boolean inputValido(String tipo, String dato) {
+    
+    private boolean validarCantidad(String cantidad) {
+        if (!cantidad.equals("")) {
+            try {
+                Integer.parseInt(cantidad);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            if (Integer.parseInt(cantidad) <= 0) {
+                return false;
+            } else {
+                return true;
+            } 
+        }
+        return false;
+    }
+    
+    private boolean validarFecha(Date fecha) {
+        if (fecha != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean validarTextField(String dato) {
+        return patternTexto.matcher(dato).matches();
+    }
+    
+    public boolean validacionesRegistro(String tipo, String dato) {
         switch (tipo) {
             case "Correo":
                 return patternCorreo.matcher(dato).matches();
@@ -37,30 +68,19 @@ public class Validaciones {
         }
     }
     
-    public boolean validarCantidad(String cantidad) {
-        if (!cantidad.equals("")) {
-            try {
-                Integer.parseInt(cantidad);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "La cantidad ingresada no es un número", "Error en tipo de dato", 0);
-                return false;
-            }
-            if (Integer.parseInt(cantidad) <= 0) {
-                JOptionPane.showMessageDialog(null, "La cantidad ingresada no es válida", "Error en cantidad", 0);
-                return false;
-            } else {
-                return true;
-            } 
+    public boolean validarCambiarProducto(Date fecha, String cantidad) {
+        if (validarFecha(fecha) && validarCantidad(cantidad)) {
+            return true;
         }
-        JOptionPane.showMessageDialog(null, "Debe definir una cantidad de productos", "Campo vacío", 0);
+        JOptionPane.showMessageDialog(null, "Verifique los datos ingresados, deje el mouse sobre el campo para saber más", "Error en los datos",0);
         return false;
     }
     
-    public boolean validarFecha(Date fecha) {
-        if (fecha != null) {
+    public boolean validarAgregarProducto(Date fecha, String nombre, String categoria, String cantidad) {
+        if (validarFecha(fecha) && validarTextField(nombre) && validarTextField(categoria) && validarCantidad(cantidad)) {
             return true;
         }
-        JOptionPane.showMessageDialog(null, "Debe colocar una fecha", "Fecha vacía", 0);
+        JOptionPane.showMessageDialog(null, "Verifique los datos ingresados, deje el mouse sobre el campo para saber más", "Error en los datos",0);
         return false;
     }
     
