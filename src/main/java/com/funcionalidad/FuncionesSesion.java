@@ -31,7 +31,7 @@ public class FuncionesSesion {
     
     public boolean validarRegistroUsuario(String usuario, String correo, String clave) {
         // Validacion de datos ingresados por el usuario
-        if (vl.inputValido("Correo", correo) & vl.inputValido("Usuario", usuario) & vl.inputValido("Clave", clave)) {
+        if (vl.validacionesRegistro("Correo", correo) & vl.validacionesRegistro("Usuario", usuario) & vl.validacionesRegistro("Clave", clave)) {
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "Verifique los datos ingresados, revise los TIPS dejando el cursor sobre el campo", "Error en los datos", 0);
