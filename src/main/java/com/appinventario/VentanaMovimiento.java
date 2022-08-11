@@ -323,12 +323,23 @@ public class VentanaMovimiento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        this.setVisible(false);
-        inputCantidad.setText(" Cantidad");
-        inputCantidad.setForeground(new Color(122,122,122));
-        inputFecha.setDate(null);
-        tablaCambios.getDataVector().removeAllElements();
-        tablaCambiosProductos.updateUI();
+        if (tablaCambios.getRowCount() >= 1) {
+            int eleccion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cerrar la ventana? Perderá todos los cambios agregados", "No ha guardado los cambios", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            if (eleccion == 0) {
+                this.setVisible(false);
+                inputCantidad.setText(" Cantidad");
+                inputCantidad.setForeground(new Color(122,122,122));
+                inputFecha.setDate(null);
+                tablaCambios.getDataVector().removeAllElements();
+                tablaCambiosProductos.updateUI();
+            }
+        } else {
+            this.setVisible(false);
+            inputCantidad.setText(" Cantidad");
+            inputCantidad.setForeground(new Color(122,122,122));
+            inputFecha.setDate(null);
+        }
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void panelDesplazarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelDesplazarMousePressed
@@ -337,9 +348,9 @@ public class VentanaMovimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_panelDesplazarMousePressed
 
     private void panelDesplazarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelDesplazarMouseDragged
-        int xPositionMouse = evt.getXOnScreen();
-        int yPositionMouse = evt.getYOnScreen();
-        this.setLocation(xPositionMouse-xMouse, yPositionMouse-yMouse);
+        int xPosicionMouse = evt.getXOnScreen();
+        int yPosicionMouse = evt.getYOnScreen();
+        this.setLocation(xPosicionMouse - xMouse, yPosicionMouse - yMouse);
     }//GEN-LAST:event_panelDesplazarMouseDragged
 
     private void btnSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseEntered
