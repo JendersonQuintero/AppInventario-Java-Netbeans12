@@ -410,16 +410,14 @@ public class VentanaMovimiento extends javax.swing.JFrame {
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
 
-        if (val.validarFecha(inputFecha.getDate())) {
-            if (val.validarCantidad(inputCantidad.getText())) {
-                java.sql.Date fecha = new java.sql.Date(inputFecha.getDate().getTime());
-                productoGuardado[0] = fecha;
-                productoGuardado[1] = inputNombre.getSelectedItem();
-                productoGuardado[2] = inputMovimiento.getSelectedItem();
-                productoGuardado[3] = inputCantidad.getText();
+        if (val.validarCambiarProducto(inputFecha.getDate(), inputCantidad.getText())) {
+            java.sql.Date fecha = new java.sql.Date(inputFecha.getDate().getTime());
+            productoGuardado[0] = fecha;
+            productoGuardado[1] = inputNombre.getSelectedItem();
+            productoGuardado[2] = inputMovimiento.getSelectedItem();
+            productoGuardado[3] = inputCantidad.getText();
 
-                fI.revisarRepetidos(tablaCambios, productoGuardado);
-            }
+            fI.revisarRepetidos(tablaCambios, productoGuardado);
         }
     }//GEN-LAST:event_btnAgregarMouseClicked
 

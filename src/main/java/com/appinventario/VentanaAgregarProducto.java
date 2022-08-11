@@ -20,6 +20,8 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
     
     DefaultTableModel tablaAgregados;
 
+    Object [] productoGuardado = new Object[4];
+
     public VentanaAgregarProducto(String usuario, FuncionesInventario fInventario, Validaciones v, VentanaInventario vI) {
         initComponents();
         
@@ -54,12 +56,12 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
         labelGuardar = new javax.swing.JLabel();
         inputFecha = new com.toedter.calendar.JDateChooser();
         inputCantidad = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        labelCantidad = new javax.swing.JLabel();
         inputNombre = new javax.swing.JTextField();
         inputCategoria = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        labelFecha = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JLabel();
+        labelCategoria = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -157,6 +159,11 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
 
         btnAgregar.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
 
         labelAgregar.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         labelAgregar.setForeground(new java.awt.Color(0, 163, 255));
@@ -182,6 +189,11 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
 
         btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
 
         labelEliminar.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         labelEliminar.setForeground(new java.awt.Color(0, 163, 255));
@@ -207,6 +219,11 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
 
         btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
 
         labelGuardar.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         labelGuardar.setForeground(new java.awt.Color(0, 163, 255));
@@ -241,11 +258,11 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
         inputCantidad.setBorder(null);
         panelBackgraund.add(inputCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 60, 30));
 
-        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Cantidad:");
-        panelBackgraund.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 70, -1));
+        labelCantidad.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
+        labelCantidad.setForeground(new java.awt.Color(255, 255, 255));
+        labelCantidad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelCantidad.setText("Cantidad:");
+        panelBackgraund.add(labelCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 70, -1));
 
         inputNombre.setBackground(new java.awt.Color(255, 255, 255));
         inputNombre.setFont(new java.awt.Font("Roboto Light", 0, 13)); // NOI18N
@@ -261,23 +278,23 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
         inputCategoria.setBorder(null);
         panelBackgraund.add(inputCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 150, 30));
 
-        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("Fecha:");
-        panelBackgraund.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 80, -1));
+        labelFecha.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
+        labelFecha.setForeground(new java.awt.Color(255, 255, 255));
+        labelFecha.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelFecha.setText("Fecha:");
+        panelBackgraund.add(labelFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 80, -1));
 
-        jLabel3.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel3.setText("Nombre:");
-        panelBackgraund.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 80, -1));
+        labelNombre.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
+        labelNombre.setForeground(new java.awt.Color(255, 255, 255));
+        labelNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelNombre.setText("Nombre:");
+        panelBackgraund.add(labelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 80, -1));
 
-        jLabel4.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel4.setText("Categoría:");
-        panelBackgraund.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 80, -1));
+        labelCategoria.setFont(new java.awt.Font("Roboto Black", 0, 12)); // NOI18N
+        labelCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        labelCategoria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelCategoria.setText("Categoría:");
+        panelBackgraund.add(labelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 80, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -332,6 +349,36 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalirMouseClicked
 
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        if (this.val.validarAgregarProducto(inputFecha.getDate(), inputNombre.getText(), inputCategoria.getText(), inputCantidad.getText())) {
+            java.sql.Date fecha = new java.sql.Date(inputFecha.getDate().getTime());
+            productoGuardado[0] = fecha;
+            productoGuardado[1] = inputNombre.getText();
+            productoGuardado[2] = inputCategoria.getText();
+            productoGuardado[3] = inputCantidad.getText();
+
+            fI.revisarRepetidos(tablaAgregados, productoGuardado);
+        }
+    }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        if (tablaProductos.getSelectedRow() != -1) {
+            tablaAgregados.removeRow(tablaProductos.getSelectedRow());
+            JOptionPane.showMessageDialog(null, "¡Producto eliminado con éxito!", "Producto Eliminado", 1);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto antes de eliminar", "No ha seleccionado un producto", 1);
+        }
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        if (tablaProductos.getRowCount() > 0) {
+            fI.agregarProductos(tablaAgregados);
+            vI.Actualizar();
+            this.setVisible(false);
+        }
+        JOptionPane.showMessageDialog(null, "No ha agregado ningún producto", "Sin productos", 0);
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -377,14 +424,14 @@ public class VentanaAgregarProducto extends javax.swing.JFrame {
     private javax.swing.JTextField inputCategoria;
     private com.toedter.calendar.JDateChooser inputFecha;
     private javax.swing.JTextField inputNombre;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelAgregar;
+    private javax.swing.JLabel labelCantidad;
+    private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelEliminar;
+    private javax.swing.JLabel labelFecha;
     private javax.swing.JLabel labelGuardar;
+    private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelSalir;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPanel panelBackgraund;

@@ -32,6 +32,10 @@ public class FuncionesInventario {
         this.productosUsuario = productosUsuario();
     }
     
+    private void agregarProducto(Object[] producto) {
+        gDatos.registrarProducto(producto);
+    }
+    
     private String extraerProductos() {
         String[] datosViejos = gDatos.cargarProductos();
         String datosLimpios = "";
@@ -201,10 +205,6 @@ public class FuncionesInventario {
             }
         }
     }
-
-    public void agregarProducto(Object[] producto) {
-        gDatos.registrarProducto(producto);
-    }
     
     public void eliminarProducto(String producto) {
         String[] datosViejos = gDatos.cargarProductos();
@@ -220,6 +220,29 @@ public class FuncionesInventario {
         this.productosUsuario = productosUsuario();
     }
     
+    public void agregarProductos(DefaultTableModel tD) {
+        String producto;
+        String cantidad;
+        String categoria;
+        String fecha;
+        Object [] productoCargado = new Object[6];
+        
+        for (int i = 0; i < tD.getRowCount(); i++) {
+            producto = String.valueOf(tD.getValueAt(i, 1));
+            cantidad = String.valueOf(tD.getValueAt(i, 3));
+            categoria = String.valueOf(tD.getValueAt(i, 2));
+            fecha = String.valueOf(tD.getValueAt(i, 0));
+                
+            productoCargado[0] = this.usuario;
+            productoCargado[1] = fecha;
+            productoCargado[2] = producto;
+            productoCargado[3] = categoria;
+            productoCargado[4] = cantidad;
+            productoCargado[5] = cantidad;
+            
+            agregarProducto(productoCargado);         
+        }
+    }
     
     public String[] getProductosUsuario() {
         return productosUsuario;

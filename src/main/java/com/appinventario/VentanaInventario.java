@@ -362,11 +362,6 @@ public class VentanaInventario extends javax.swing.JFrame {
         opcionBusqueda.setForeground(new java.awt.Color(153, 153, 153));
         opcionBusqueda.setMaximumRowCount(5);
         opcionBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bebidas", "Higiene", "Viveres", "Panaderia", "Limpieza", "Comida" }));
-        opcionBusqueda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionBusquedaActionPerformed(evt);
-            }
-        });
         background.add(opcionBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 140, 30));
 
         inputBuscar.setBackground(new java.awt.Color(255, 255, 255));
@@ -478,10 +473,6 @@ public class VentanaInventario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void opcionBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionBusquedaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_opcionBusquedaActionPerformed
 
     private void panelDesplazarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelDesplazarMousePressed
         xMouse = evt.getX();
