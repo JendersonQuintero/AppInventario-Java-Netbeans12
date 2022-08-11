@@ -18,14 +18,14 @@ public class Run {
      */
     public static void main(String[] args) {
         // Inicializar base de datos
-//        GuardarDatos gD = new GuardarDatos();
-//        
-//        // Inicializar Funciones de Sesión
-//        FuncionesSesion fS = new FuncionesSesion(gD);
-//        
-//        // Se inicia y activa la ventana de Login
-//        VentanaInicioSesion vInit = new VentanaInicioSesion(gD, fS);
-//        vInit.setVisible(true);
+        GuardarDatos gD = new GuardarDatos();
+        
+        // Inicializar Funciones de Sesión
+        FuncionesSesion fS = new FuncionesSesion(gD);
+        
+        // Se inicia y activa la ventana de Login
+        VentanaInicioSesion vInit = new VentanaInicioSesion(gD, fS);
+        vInit.setVisible(true);
         
 
     }
