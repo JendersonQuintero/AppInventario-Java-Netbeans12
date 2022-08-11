@@ -170,6 +170,9 @@ public class VentanaInventario extends javax.swing.JFrame {
         btnAgregar.setBackground(new java.awt.Color(0, 163, 255));
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAgregarMouseEntered(evt);
             }
@@ -584,6 +587,11 @@ public class VentanaInventario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto antes de eliminar", "No ha seleccionado un producto", 1);
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        vA = new VentanaAgregarProducto(this.usuario, fI, val, this);
+        vA.setVisible(true);
+    }//GEN-LAST:event_btnAgregarMouseClicked
 
     /**
      * @param args the command line arguments
