@@ -35,20 +35,13 @@ public class Validaciones {
             } catch (NumberFormatException e) {
                 return false;
             }
-            if (Integer.parseInt(cantidad) <= 0) {
-                return false;
-            } else {
-                return true;
-            } 
+            return Integer.parseInt(cantidad) <= 0; 
         }
         return false;
     }
     
     private boolean validarFecha(Date fecha) {
-        if (fecha != null) {
-            return true;
-        }
-        return false;
+        return fecha != null;
     }
     
     private boolean validarTextField(String dato) {
